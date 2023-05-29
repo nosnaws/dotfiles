@@ -1,0 +1,43 @@
+[user]
+	name = Alec Swanson
+	email = aleceswanson@gmail.com
+	# signingkey = TODO
+[core]
+	editor = nvim
+	excludesfile = ~/.gitexcludes
+[color]
+	ui = auto
+[push]
+	default = simple
+[merge]
+	tool = vimdiff
+[mergetool]
+	prompt = true
+	keepBackup = false
+[alias]
+	s = status
+	b = branch
+	c = commit -v
+	a = add
+	l = pull
+	p = push
+	f = fetch
+	r = rebase
+	d = diff
+	dt = difftool
+	lg = log --stat
+[commit]
+	# gpgsign = true # figure this out 
+[pull]
+	rebase = true
+[include]
+	path = ~/.gitconfig_local # just in case we need local stuff
+[init]
+	defaultBranch = main
+
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
