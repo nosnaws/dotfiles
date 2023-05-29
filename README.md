@@ -2,7 +2,7 @@
 > - Me (probably)
 
 ## Summary
-My attempt to learn lisp, delve a bit deeper into my Neovim configuration, and finally make my dotfiles reproducible. _Heavily_ inspired by [Olical's dotfiles](https://github.com/Olical/dotfiles).
+My attempt to learn lisp, delve a bit deeper into my Neovim configuration, and finally make my dotfiles reproducible. __Heavily__ inspired by [Olical's dotfiles](https://github.com/Olical/dotfiles).
 
 Some key things:
 1. The setup script can be run with `./setup.sh`, it will install basic dependencies and create symlinks. Currently it only supports the `pacman` and `brew` package managers. 
