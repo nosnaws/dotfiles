@@ -35,5 +35,17 @@
     (not xs) 0
     (length xs)))
 
+(fn setopt [thing to]
+  (tset vim.opt thing to))
 
-{:nnoremap nnoremap :lnnoremap lnnoremap :count count :get get}
+(fn getopt [thing]
+   (. (get vim.opt thing) "_value"))
+
+{
+  :nnoremap nnoremap 
+  :lnnoremap lnnoremap 
+  :count count 
+  :get get 
+  :setopt setopt
+  :getopt getopt
+}

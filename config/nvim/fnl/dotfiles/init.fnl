@@ -3,3 +3,5 @@
 (local plugin (require :dotfiles.plugin))
 
 (print "hello!")
+
+{:toggle_bg mapping.toggle_bg}

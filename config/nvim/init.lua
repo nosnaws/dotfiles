@@ -27,4 +27,6 @@ vim.loader.enable()
 require("hotpot")
 
 -- Load config
-require("dotfiles")
+Dotfiles = require("dotfiles")
+
+
