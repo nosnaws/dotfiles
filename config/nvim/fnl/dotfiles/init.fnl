@@ -1,6 +1,5 @@
-(module dotfiles.init
-  {require [dotfiles.core
-            dotfiles.mapping
-            dotfiles.plugin]})
+(local core (require :dotfiles.core))
+(local mapping (require :dotfiles.mapping))
+(local plugin (require :dotfiles.plugin))
 
 (print "hello!")

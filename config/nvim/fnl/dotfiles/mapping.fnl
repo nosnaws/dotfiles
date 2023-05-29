@@ -1,17 +1,14 @@
-(module dotfiles.mapping
-  {autoload {nvim aniseed.nvim
-             nu aniseed.nvim.util
-             util dotfiles.util
-             core aniseed.core}})
+(local util (require :dotfiles.util))
 
-(defn- noremap [mode from to]
+(fn noremap [mode from to]
   "Sets a mapping with {:noremap true}."
-  (nvim.set_keymap mode from to {:noremap true}))
+  (vim.keymap.set mode from to {:noremap true}))
 
 ;; Generic mappings
-(nvim.set_keymap :n :<space> :<nop> {:noremap true})
-(set nvim.g.mapleader " ")
-(set nvim.g.maplocalleader ",")
+;;(nvim.set_keymap :n :<space> :<nop> {:noremap true})
+(noremap :n :<space> :<nop>)
+(set vim.g.mapleader " ")
+(set vim.g.maplocalleader ",")
 
 ;; Trying out the JK escape sequence
 (noremap :i :jk :<esc>)

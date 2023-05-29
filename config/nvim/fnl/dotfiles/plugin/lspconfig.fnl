@@ -1,12 +1,7 @@
-(module dotfiles.plugin.lspconfig
-  {autoload {util dotfiles.util
-             nvim aniseed.nvim
-             }}
-  )
+(local util (require :dotfiles.util))
 
-(defn- map [from to]
-  (util.nnoremap from to)
-  )
+(fn map [from to]
+  (util.nnoremap from to))
 
 (let [(ok? lsp) (pcall require :lspconfig)]
   (when ok?
@@ -18,7 +13,7 @@
                         :runtime { :version "LuaJIT"}
                         :diagnostics {:globals ["vim"]}
                         :workspace {:library (vim.api.nvim_get_runtime_file "" true)}
-                        }}
+                      }}
        }
       )
 

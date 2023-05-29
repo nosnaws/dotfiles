@@ -1,6 +1,4 @@
-(module dotfiles.plugin.telescope
-  {autoload {nvim aniseed.nvim
-             util dotfiles.util}})
+(local util (require :dotfiles.util))
 
 (let [(ok? telescope) (pcall require :telescope)]
   (when ok?
@@ -9,7 +7,8 @@
        {:vimgrep_arguments ["rg" "--color=never" "--no-heading"
                             "--with-filename" "--line-number" "--column"
                             "--smart-case" "--hidden" "--follow"
-                            "-g" "!.git/"]}})
+                            "--glob" "!**/.git/*"]
+        :file_ignore_patterns [".git/" "node_modules"]}})
 
     (util.lnnoremap :ff "Telescope find_files hidden=true")
     (util.lnnoremap :f- "Telescope file_browser")

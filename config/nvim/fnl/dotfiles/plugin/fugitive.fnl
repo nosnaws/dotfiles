@@ -1,6 +1,4 @@
-(module dotfiles.plugin.fugitive
-  {autoload {util dotfiles.util}}
-  )
+(local util (require :dotfiles.util))
 
 (util.lnnoremap :gs "Git")
 (util.lnnoremap :gb "Git blame")

@@ -1,37 +1,39 @@
-(module dotfiles.util
-  {autoload {nvim aniseed.nvim
-             a aniseed.core
-             }}
-  )
+(fn get [tbl key]
+  "Gets a value out of a table, return nil if the table or value does not exist."
+  (if tbl
+      (. tbl key)))
 
-(defn expand [path]
-  (nvim.fn.expand path)
-  )
-
-(defn glob [path]
-  (nvim.fn.glob path true true true)
-  )
-
-(defn exists? [path]
-  (= (nvim.fn.filereadable path) 1)
-  )
-
-(defn lua-file [path]
-  (nvim.ex.luafile path)
-  )
-
-(def config-path (nvim.fn.stdpath "config"))
-
-(defn nnoremap [from to opts]
+(fn nnoremap [from to opts]
   (let [map-opts {:noremap true}
         to (.. ":" to "<cr>")]
-    (if (a.get opts :local?)
-      (nvim.buf_set_keymap 0 :n from to map-opts)
-      (nvim.set_keymap :n from to map-opts)
-      )
-    )
-  )
+    (if (get opts :local?)
+      (vim.buf_keymap.set 0 :n from to map-opts)
+      (vim.keymap.set :n from to map-opts))))
 
-(defn lnnoremap [from to]
-  (nnoremap (.. "<leader>" from) to)
-  )
+(fn lnnoremap [from to]
+  (nnoremap (.. "<leader>" from) to))
+
+(fn table? [x]
+  "True if the value is of type 'table'."
+  (= "table" (type x)))
+
+(fn keys [t]
+  "Get all the keys of a table."
+  (let [result []]
+    (when t
+      (each [k _ (pairs t)]
+        (table.insert result k)))
+    result))
+
+(fn count [xs]
+  (if
+    (table? xs) (let [maxn (table.maxn xs)]
+                  ;; We only count the keys if maxn returns 0. TODO: why?
+                  (if (= 0 maxn)
+                      (table.maxn (keys xs))
+                      maxn))
+    (not xs) 0
+    (length xs)))
+
+
+{:nnoremap nnoremap :lnnoremap lnnoremap :count count :get get}

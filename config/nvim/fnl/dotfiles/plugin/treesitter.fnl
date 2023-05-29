@@ -1,5 +1,3 @@
-(module dotfiles.plugin.treesitter)
-
 (let [(ok? ts) (pcall require :nvim-treesitter.install)]
   (when ok?
     (ts.update

@@ -1,8 +1,4 @@
-(module dotfiles.plugin.cmp
-  {autoload {nvim aniseed.nvim}}
-  )
-
-(set nvim.o.completeopt "menuone,noselect")
+(set vim.o.completeopt "menuone,noselect")
 
 (let [(ok? cmp) (pcall require :cmp)]
   (when ok?
