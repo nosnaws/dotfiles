@@ -19,7 +19,7 @@
                 opts (. pkgs (+ i 1))]
             (if (util.get opts :mod) (safe-require-plugin-config (util.get opts :mod)))
             (use {
-                 :0 name 
+                 1 name 
                  :requires (util.get opts :requires)
                  :startup (util.get opts :startup)
                  :update (util.get opts :update)
