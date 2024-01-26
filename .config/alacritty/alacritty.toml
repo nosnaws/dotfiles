@@ -1,0 +1,8 @@
+import = [
+ "~/code/alacritty-theme/themes/iceberg.yml"
+]
+
+
+[font]
+normal = { family = "Hack Nerd Font", style = "Regular" }
+size = 16

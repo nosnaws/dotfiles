@@ -1,11 +1,23 @@
-#!/bin/sh
+#!/bin/zsh
 
-PWD=$(pwd)
+brew install \
+	ripgrep \
+	fd \
+	raycast \
+	neovim \
+	starship \
+	rectangle \
+	lua-language-server \
+	nvm \
+	gh
 
-ln -fs $PWD/.gitconfig $HOME/.gitconfig
-ln -fs $PWD/config/kitty $HOME/.config/
-ln -fs $PWD/config/nvim $HOME/.config/
 
+mkdir -p ~/.config/nvim
+ln -f  ./.config/nvim/init.lua ~/.config/nvim/init.lua
+ln -f ./.config/nvim/lazy-lock.json ~/.config/nvim/lazy-lock.json
 
-# Install dependecies
-source ./install.sh
+mkdir -p ~/.config/alacritty
+ln -f ./.config/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
+
+mkdir -p ~/.config/alacritty/themes
+gh repo clone seahal/iceberg_theme_for_alacritty ~/.config/alacritty/themes
