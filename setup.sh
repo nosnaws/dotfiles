@@ -9,7 +9,8 @@ brew install \
 	rectangle \
 	lua-language-server \
 	nvm \
-	gh
+	gh \
+	zellij \
 
 
 mkdir -p ~/.config/nvim
@@ -21,3 +22,7 @@ ln -f ./.config/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
 
 mkdir -p ~/.config/alacritty/themes
 gh repo clone EdenEast/nightfox.nvim ~/.config/alacritty/themes/
+
+mkdir -p ~/.config/zellij
+ln -f ./.config/zellij/config.kdl ~/.config/zellij/config.kdl
+ln -f ~/.config/alacritty/themes/extra/zellij/nightfox.kdl ~/.config/zellij/nightfox.kdl
