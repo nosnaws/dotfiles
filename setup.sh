@@ -18,4 +18,6 @@ ln -f ./.config/nvim/lazy-lock.json ~/.config/nvim/lazy-lock.json
 
 mkdir -p ~/.config/alacritty
 ln -f ./.config/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
-ln -f ./.config/alacritty/iceberg.toml ~/.config/alacritty/iceberg.toml
+
+mkdir -p ~/.config/alacritty/themes
+gh repo clone EdenEast/nightfox.nvim ~/.config/alacritty/themes/

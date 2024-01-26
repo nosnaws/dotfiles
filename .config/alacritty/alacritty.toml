@@ -1,5 +1,5 @@
 import = [
- "~/.config/alacritty/iceberg.toml"
+ "~/.config/alacritty/themes/extra/nightfox/alacritty.toml"
 ]
 
 
