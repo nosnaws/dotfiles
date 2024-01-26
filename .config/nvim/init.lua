@@ -1,32 +1,34 @@
+-- normal mode remap
+local function noremap(mode, seq, cmd, desc)
+	vim.keymap.set(mode, seq, cmd, { noremap = true, desc = desc })
+end
+
+-- leader normal mode remap
+local function lnmap(keys, command, desc)
+	noremap('n', '<leader>' .. keys, command, desc)
+end
+
+-- TODO: Write a function to map a list of keys
+-- write another function to pull the mapping out to use in lazy loading
+
 vim.g.mapleader = ' '
 
--- Mappings
-function noremap(mode, seq, cmd)
-	vim.keymap.set(mode, seq, cmd .. '<CR>', { noremap = true })
-end
+lnmap('ws', ':w<cr>', "Save current file")
+lnmap('wq', ':q<cr>', "Close current file")
 
-function lnmap(keys, command)
-	noremap('n', '<Leader>' .. keys, command)
-end
-
-lnmap('ws', ':w')
-lnmap('wq', ':q')
-
-vim.keymap.set('i', 'jk', '<esc>', { noremap = true })
-vim.keymap.set('c', 'jk', '<c-c>', { noremap = true })
-vim.keymap.set('t', 'jk', '<c-\\><c-n>', { noremap = true })
+noremap('i', 'jk', '<esc>', "")
+noremap('c', 'jk', '<c-c>', "")
+noremap('t', 'jk', '<c-\\><c-n>', "")
 
 
-lnmap('gs', ':Git')
-lnmap('gb', ':Git blame')
-lnmap('gd', ':Gdiff')
-lnmap('gp', ':Git push')
-lnmap('gl', ':Git pull')
-lnmap('gf', ':Git fetch')
+lnmap('gs', ':Git<cr>', "Open git fugitive")
+lnmap('gb', ':Git blame<cr>', "Git blame")
+lnmap('gd', ':Gdiff<cr>', "Git diff")
+lnmap('gp', ':Git push<cr>', "Git push")
+lnmap('gl', ':Git pull<cr>', "Git pull")
+lnmap('gf', ':Git fetch<cr>', "Git fetch")
 
 vim.o.termguicolors = true
-vim.o.background = 'dark'
-vim.o.timeoutlen = 500
 vim.o.number = true
 vim.o.wildmenu = true
 vim.o.syntax = 'enable'
@@ -39,9 +41,13 @@ vim.o.foldenable = true
 vim.o.swapfile = false
 vim.o.splitright = true
 vim.o.splitbelow = true
+
+-- Spaces instead of tabs
 vim.o.shiftwidth = 2
 vim.o.tabstop = 2
-vim.o.completeopt = "menuone,noselect"
+
+-- Always show the auto complete menu
+vim.o.completeopt = "menuone"
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -58,31 +64,22 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	{
-		'cocopon/iceberg.vim', -- theme
+		'EdenEast/nightfox.nvim', -- theme
 		lazy = false,
 		priority = 1000,
 		config = function()
-			vim.cmd([[colorscheme iceberg]])
+			vim.cmd([[set background=dark]])
+			vim.cmd([[colorscheme nightfox]])
 		end,
 	},
 
 	{
 		'neovim/nvim-lspconfig',
-		keys = {
-			{ "gd",         function() vim.lsp.buf.definition() end },
-			{ "gD",         function() vim.lsp.buf.declaration() end },
-			{ "K",          function() vim.lsp.buf.hover() end },
-			{ "gr",         function() vim.lsp.buf.references() end },
-			{ "gi",         function() vim.lsp.buf.implementation() end },
-			{ "<c-k>",      function() vim.lsp.buf.signature_help() end },
-			{ "<leader>lr", function() vim.lsp.buf.rename() end },
-			{ "<leader>lf", function() vim.lsp.buf.format({ async = true }) end },
-			{ "<leader>ca", function() vim.lsp.buf.code_action() end },
-		},
 		lazy = false,
 		priority = 999,
 		config = function()
 			local lspconfig = require('lspconfig')
+
 			lspconfig.tsserver.setup {}
 			lspconfig.lua_ls.setup {
 				settings = {
@@ -105,36 +102,38 @@ require("lazy").setup({
 					}
 				},
 			}
+
+			noremap("n", "gd", vim.lsp.buf.definition, "LSP definition")
+			noremap("n", "gD", vim.lsp.buf.declaration, "LSP declaration")
+			noremap("n", "K", vim.lsp.buf.hover, "LSP hover doc")
+			noremap("n", "gr", vim.lsp.buf.references, "LSP references")
+			noremap("n", "gi", vim.lsp.buf.implementation, "LSP implementations")
+			noremap("n", "<c-k>", vim.lsp.buf.signature_help, "LSP signature_help")
+			noremap("n", "<leader>lr", vim.lsp.buf.rename, "LSP rename")
+			noremap("n", "<leader>lf", function() vim.lsp.buf.format({ async = true }) end, "LSP format")
+			noremap("n", "<leader>ca", vim.lsp.buf.code_action, "LSP code_action")
 		end
 	},
 	{
 		'nvim-treesitter/nvim-treesitter',
-		build = ':TSUpdate',
+		build = ":TSUpdate",
 		config = function()
-			require('nvim-treesitter').setup {
+			require('nvim-treesitter.configs').setup({
 				indent = { enable = true },
 				highlight = { enable = true, additional_vim_regex_highlighting = false },
 				auto_install = true,
 				ensure_installed = { 'lua', 'javascript', 'typescript' }
-			}
+			})
 		end
 	},
-
 	{
 		'nvim-telescope/telescope.nvim',
 		dependencies = {
 			'nvim-lua/popup.nvim',
 			'nvim-lua/plenary.nvim',
 		},
-		keys = {
-			{ "<leader>ff", function() require('telescope.builtin').find_files({ hidden = true }) end },
-			{ "<leader>fg", function() require('telescope.builtin').live_grep() end },
-			{ "<leader>fb", function() require('telescope.builtin').buffers() end },
-			{ "<leader>fm", function() require('telescope.builtin').keymaps() end },
-			{ "<leader>fq", function() require('telescope.builtin').quickfix() end },
-			{ "<leader>fs", function() require('telescope.builtin').lsp_workspace_symbols() end },
-		},
 		config = function()
+			local teleFns = require('telescope.builtin')
 			require("telescope").setup({
 				defaults = {
 					vimgrep_arguments = { 'rg', '--color=never', '--no-heading',
@@ -144,6 +143,13 @@ require("lazy").setup({
 					file_ignore_patterns = { ".git/", "node_modules" }
 				}
 			})
+
+			lnmap("ff", function() teleFns.find_files({ hidden = true }) end, "Find files")
+			lnmap("fg", teleFns.live_grep, "Live grep")
+			lnmap("fb", teleFns.buffers, "Find buffers")
+			lnmap("fm", teleFns.keymaps, "Find keymaps")
+			lnmap("fq", teleFns.quickfix, "Find in quickfix list")
+			lnmap("fs", teleFns.lsp_document_symbols, "Find symbols in document")
 		end,
 	},
 	'hrsh7th/cmp-buffer',
@@ -155,6 +161,9 @@ require("lazy").setup({
 		config = function()
 			local cmp = require("cmp")
 			cmp.setup({
+				snippet = {
+
+				},
 				sources = {
 					{ name = "nvim_lsp" },
 					{ name = "buffer" },
@@ -171,16 +180,27 @@ require("lazy").setup({
 		end
 	},
 	'numToStr/Comment.nvim',
-	'folke/which-key.nvim',
 	{
 		'nvim-lualine/lualine.nvim',
 		config = function()
 			require('lualine').setup({
 				options = {
-					theme = "iceberg"
+					theme = "nightfox"
 				}
 			})
 		end
 	},
 	'tpope/vim-fugitive',
+	'tpope/vim-commentary',
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		init = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 500
+		end,
+		opts = {
+			triggers = "auto"
+		}
+	}
 })
