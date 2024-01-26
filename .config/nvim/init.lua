@@ -89,11 +89,15 @@ require("lazy").setup({
 						runtime = {
 							version = "LuaJIT"
 						},
-						workspace = {
-							checkThirdParty = false,
-							library = {
-								vim.env.VIMRUNTIME
+						diagnostics = {
+							globals = {
+								"vim",
+								"require",
 							}
+						},
+						workspace = {
+							-- Recognize vim runtime
+							library = vim.api.nvim_get_runtime_file("", true),
 						},
 						format = {
 							defaultConfig = {

@@ -1,7 +1,7 @@
 eval "$(starship init zsh)"
 
 # bun completions
-[ -s "/Users/alecswanson/.bun/_bun" ] && source "/Users/alecswanson/.bun/_bun"
+[ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"

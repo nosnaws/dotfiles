@@ -11,7 +11,9 @@ brew install \
 	nvm \
 	gh \
 	zellij \
+	alacritty \
 
+ln -f ./.zshrc ~/.zshrc
 
 mkdir -p ~/.config/nvim
 ln -f ./.config/nvim/init.lua ~/.config/nvim/init.lua
