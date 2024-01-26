@@ -4,19 +4,19 @@ background = '0x161821'
 foreground = '0xc6c8d1'
 
 [colors.cursor]
-text = '0xd2d4de'
-cursor = '0xc7c7c7'
+text = '0x161821'
+cursor = '0xd2d4de'
 
 # Normal colors
 [colors.normal]
-black = '0x000000'
-red = '0xE68E8E'
-green = '0x83AC8E'
-yellow = '0xF5B78A'
-blue = '0x9BB8DC'
-magenta = '0xBAACE2'
-cyan = '0x00C5C7'
-white = '0xC7C7C7'
+black = '0x161821'
+red = '0xe27878'
+green = '0xb4be82'
+yellow = '0xe2a478'
+blue = '0x84a0c6'
+magenta = '0xa093c7'
+cyan = '0x89b8c2'
+white = '0xc6c8d1'
 
 # Bright colors
 [colors.bright]

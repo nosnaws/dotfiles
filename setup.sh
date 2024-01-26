@@ -13,11 +13,9 @@ brew install \
 
 
 mkdir -p ~/.config/nvim
-ln -f  ./.config/nvim/init.lua ~/.config/nvim/init.lua
+ln -f ./.config/nvim/init.lua ~/.config/nvim/init.lua
 ln -f ./.config/nvim/lazy-lock.json ~/.config/nvim/lazy-lock.json
 
 mkdir -p ~/.config/alacritty
 ln -f ./.config/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
-
-mkdir -p ~/.config/alacritty/themes
-gh repo clone seahal/iceberg_theme_for_alacritty ~/.config/alacritty/themes
+ln -f ./.config/alacritty/iceberg.toml ~/.config/alacritty/iceberg.toml
