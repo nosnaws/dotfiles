@@ -199,7 +199,11 @@ require("lazy").setup({
 			vim.o.timeoutlen = 500
 		end,
 		opts = {
-			triggers = "auto"
+			triggers = "auto",
+			triggers_blacklist = {
+				i = { "j", "k" },
+				v = { "j", "k" },
+			}
 		}
 	},
 	{
