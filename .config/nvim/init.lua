@@ -181,12 +181,14 @@ require("lazy").setup({
 	'numToStr/Comment.nvim',
 	{
 		'nvim-lualine/lualine.nvim',
+		lazy = false,
+		priority = 998,
+		dependencies = {
+			"nvim-tree/nvim-web-devicons"
+		},
 		config = function()
-			require('lualine').setup({
-				options = {
-					theme = "nightfox"
-				}
-			})
+			vim.cmd("colorscheme nightfox")
+			require('lualine').setup({})
 		end
 	},
 	'tpope/vim-fugitive',
