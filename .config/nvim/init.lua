@@ -163,9 +163,6 @@ require("lazy").setup({
 		config = function()
 			local cmp = require("cmp")
 			cmp.setup({
-				snippet = {
-
-				},
 				sources = {
 					{ name = "nvim_lsp" },
 					{ name = "buffer" },
