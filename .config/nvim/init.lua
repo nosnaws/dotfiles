@@ -70,8 +70,8 @@ require("lazy").setup({
 		lazy = false,
 		priority = 1000,
 		config = function()
-			vim.cmd([[set background=dark]])
-			vim.cmd([[colorscheme nightfox]])
+			vim.cmd("set background=dark")
+			vim.cmd("colorscheme nightfox")
 		end,
 	},
 
