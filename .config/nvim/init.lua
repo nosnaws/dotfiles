@@ -205,6 +205,7 @@ require("lazy").setup({
 			triggers_blacklist = {
 				i = { "j", "k" },
 				v = { "j", "k" },
+				c = { "j", "k" },
 			}
 		}
 	},
