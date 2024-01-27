@@ -5,4 +5,4 @@ import = [
 
 [font]
 normal = { family = "Hack Nerd Font", style = "Regular" }
-size = 14
+size = 16
