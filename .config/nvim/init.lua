@@ -45,6 +45,7 @@ vim.o.splitbelow = true
 -- Spaces instead of tabs
 vim.o.shiftwidth = 2
 vim.o.tabstop = 2
+vim.o.expandtab = true
 
 -- Always show the auto complete menu
 vim.o.completeopt = "menuone"
@@ -66,12 +67,12 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	{
-		'EdenEast/nightfox.nvim', -- theme
+		'folke/tokyonight.nvim', -- theme
 		lazy = false,
 		priority = 1000,
 		config = function()
 			vim.cmd("set background=dark")
-			vim.cmd("colorscheme nightfox")
+			vim.cmd("colorscheme tokyonight-storm")
 		end,
 	},
 
@@ -82,7 +83,21 @@ require("lazy").setup({
 		config = function()
 			local lspconfig = require('lspconfig')
 
+			lspconfig.rust_analyzer.setup {
+				settings = {
+					['rust-analyzer'] = {
+						diagnostics = {
+							enable = false
+						}
+					}
+				}
+			}
+			lspconfig.astro.setup {}
+			lspconfig.gleam.setup {}
 			lspconfig.tsserver.setup {}
+			lspconfig.elixirls.setup {
+				cmd = { "/Users/alecswanson/code/elixir-ls/language_server.sh" }
+			}
 			lspconfig.lua_ls.setup {
 				settings = {
 					Lua = {
@@ -118,6 +133,7 @@ require("lazy").setup({
 			noremap("n", "<leader>lr", vim.lsp.buf.rename, "LSP rename")
 			noremap("n", "<leader>lf", function() vim.lsp.buf.format({ async = true }) end, "LSP format")
 			noremap("n", "<leader>ca", vim.lsp.buf.code_action, "LSP code_action")
+			noremap("n", "<leader>ld", vim.diagnostic.open_float, "diags")
 		end
 	},
 	{
@@ -191,8 +207,9 @@ require("lazy").setup({
 			"nvim-tree/nvim-web-devicons"
 		},
 		config = function()
-			vim.cmd("colorscheme nightfox")
-			require('lualine').setup({})
+			require('lualine').setup({
+        options = { theme = "tokyonight" }
+      })
 		end
 	},
 	'tpope/vim-fugitive',
