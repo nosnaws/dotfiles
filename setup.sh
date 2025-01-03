@@ -4,6 +4,7 @@ brew install \
 	ripgrep \
 	fd \
 	raycast \
+  ghostty \
 	neovim \
 	starship \
 	rectangle \

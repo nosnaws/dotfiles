@@ -119,9 +119,10 @@ require("lazy").setup({
           }
         }
       }
-      -- Deno LSP and the Typescript LSP do not seem to play well together
-      -- lspconfig.ts_ls.setup {}
-      lspconfig.denols.setup {}
+      lspconfig.eslint.setup {}
+      -- -- Deno LSP and the Typescript LSP do not seem to play well together
+      lspconfig.ts_ls.setup {}
+      -- lspconfig.denols.setup {}
       lspconfig.elixirls.setup {
         cmd = { "/Users/alecswanson/code/elixir-ls/language_server.sh" }
       }
@@ -268,7 +269,7 @@ require("lazy").setup({
       })
 
       lnmap("ca", ":CodeCompanionActions<cr>", "CodeCompanion Actions")
-      noremap("n","<C-a>", ":CodeCompanionChat Toggle<cr>", "Toggle CodeCompanion Chat")
+      noremap("n", "<C-a>", ":CodeCompanionChat Toggle<cr>", "Toggle CodeCompanion Chat")
       noremap("v", "<leader>ca", ":CodeCompanionActions<cr>", "CodeCompanion Actions")
       noremap("v", "<C-a>", ":CodeCompanionChat Toggle<cr>", "Toggle CodeCompanion Chat")
       noremap("v", "ga", ":CodeCompanionChat Add<cr>", "Add to CodeCompanion Chat")
@@ -276,5 +277,25 @@ require("lazy").setup({
   },
   {
     "github/copilot.vim",
+  },
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      local harpoon = require("harpoon")
+      harpoon.setup()
+
+      lnmap("ha", function() harpoon:list():add() end)
+      lnmap("he", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+      noremap("n", "<C-1>", function() harpoon:list():select(1) end)
+      noremap("n", "<C-2>", function() harpoon:list():select(2) end)
+      noremap("n", "<C-3>", function() harpoon:list():select(3) end)
+      noremap("n", "<C-4>", function() harpoon:list():select(4) end)
+      noremap("n", "<C-S-P>", function() harpoon:list():prev() end)
+      noremap("n", "<C-S-N>", function() harpoon:list():next() end)
+    end
   },
 })
