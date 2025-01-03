@@ -20,7 +20,6 @@ noremap('i', 'jk', '<esc>', "")
 noremap('c', 'jk', '<c-c>', "")
 noremap('t', 'jk', '<c-\\><c-n>', "")
 
-
 lnmap('gs', ':Git<cr>', "Open git fugitive")
 lnmap('gb', ':Git blame<cr>', "Git blame")
 lnmap('gd', ':Gdiff<cr>', "Git diff")
@@ -83,7 +82,10 @@ require("lazy").setup({
     },
     config = function()
       require('lualine').setup({
-        options = { theme = "nord" }
+        options = { theme = "nord" },
+        sections = {
+          lualine_c = { { 'filename', path = 1 } }
+        }
       })
     end
   },
@@ -174,6 +176,12 @@ require("lazy").setup({
     end
   },
   {
+    "nvim-treesitter/nvim-treesitter-context",
+    config = function()
+      require("treesitter-context").setup({})
+    end
+  },
+  {
     'nvim-telescope/telescope.nvim',
     dependencies = {
       'nvim-lua/popup.nvim',
@@ -250,7 +258,21 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
-    config = true
+    config = function()
+      require("codecompanion").setup({
+        display = {
+          action_palette = {
+            provider = "telescope",
+          }
+        }
+      })
+
+      lnmap("ca", ":CodeCompanionActions<cr>", "CodeCompanion Actions")
+      noremap("n","<C-a>", ":CodeCompanionChat Toggle<cr>", "Toggle CodeCompanion Chat")
+      noremap("v", "<leader>ca", ":CodeCompanionActions<cr>", "CodeCompanion Actions")
+      noremap("v", "<C-a>", ":CodeCompanionChat Toggle<cr>", "Toggle CodeCompanion Chat")
+      noremap("v", "ga", ":CodeCompanionChat Add<cr>", "Add to CodeCompanion Chat")
+    end
   },
   {
     "github/copilot.vim",
