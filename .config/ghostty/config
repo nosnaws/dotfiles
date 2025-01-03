@@ -1,0 +1,6 @@
+font-family = "Hack Nerd Font Mono"
+font-size = 16
+theme = light:nord-light, dark:nord
+macos-non-native-fullscreen = true
+macos-titlebar-style = tabs
+window-save-state = never
