@@ -46,8 +46,8 @@ vim.o.shiftwidth = 2
 vim.o.tabstop = 2
 vim.o.expandtab = true
 
--- Always show the auto complete menu
-vim.o.completeopt = "menuone"
+-- nvim-cmp recommended settings
+vim.o.completeopt = "menu,menuone,noselect"
 
 -- Bootstrap package manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -213,21 +213,50 @@ require("lazy").setup({
   'hrsh7th/cmp-nvim-lsp',
   'hrsh7th/cmp-path',
   {
-    "zbirenbaum/copilot-cmp",
+    'milanglacier/minuet-ai.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
-      require("copilot_cmp").setup()
-    end
+      require('minuet').setup({
+        provider = 'openai_fim_compatible',
+        n_completions = 1,
+        context_window = 512,
+        provider_options = {
+          openai_fim_compatible = {
+            api_key = 'TERM',
+            name = 'Ollama',
+            end_point = 'http://localhost:11434/v1/completions',
+            model = 'qwen2.5-coder:7b',
+            optional = {
+              max_tokens = 64,
+              top_p = 0.9,
+            },
+          },
+        },
+        virtualtext = {
+          auto_trigger_ft = { '*' },
+          keymap = {
+            accept = '<C-y>',
+            accept_line = '<C-l>',
+            prev = '<C-p>',
+            next = '<C-n>',
+            dismiss = '<C-e>',
+          },
+        },
+      })
+    end,
   },
   {
     'hrsh7th/nvim-cmp',
     config = function()
       local cmp = require("cmp")
       cmp.setup({
+        completion = {
+          autocomplete = false,
+        },
         sources = {
           { name = "nvim_lsp" },
-          { name = "buffer" },
           { name = "path" },
-          { name = "copilot" },
+          { name = "buffer" },
         },
         mapping = cmp.mapping.preset.insert({
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -236,6 +265,14 @@ require("lazy").setup({
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
         })
       })
+    end
+  },
+  {
+    'ggandor/leap.nvim',
+    config = function()
+      vim.keymap.set('n', 's', '<Plug>(leap)')
+      vim.keymap.set('x', 's', '<Plug>(leap)')
+      vim.keymap.set('o', 's', '<Plug>(leap)')
     end
   },
   'numToStr/Comment.nvim',
@@ -274,9 +311,6 @@ require("lazy").setup({
       noremap("v", "<C-a>", ":CodeCompanionChat Toggle<cr>", "Toggle CodeCompanion Chat")
       noremap("v", "ga", ":CodeCompanionChat Add<cr>", "Add to CodeCompanion Chat")
     end
-  },
-  {
-    "github/copilot.vim",
   },
   {
     "ThePrimeagen/harpoon",
