@@ -44,7 +44,7 @@ main
 
 ### State
 
-Stored in `.smoke/state.json` at repo root. Tracks branch name and patch-id-to-PR mappings. Patch IDs survive rebases — no commit message modification needed.
+Stored in `.smoke/state.json` at repo root. Each commit gets a dedicated remote branch (`smoke/<branch>/<position>`) used as the PR head. Patch IDs are used internally to match commits across rebases — no commit message modification needed.
 
 ### Key Behaviors
 

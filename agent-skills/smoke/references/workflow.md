@@ -64,7 +64,7 @@ If a PR was closed without merging and the commit still exists in the stack, `sm
 `smoke push`, `smoke pull`, and `smoke amend` all require a clean working tree. Stash or commit changes first.
 
 ### Branch Naming
-Smoke creates remote branches as `smoke/<your-branch>/<patch-id-prefix>` for each commit's PR.
+Smoke creates remote branches as `smoke/<your-branch>/<position>` (e.g., `smoke/my-feature/01`) for each commit's PR.
 
 ### State File
 `.smoke/state.json` is created at repo root. Add `.smoke/` to `.gitignore` if you don't want it tracked.
