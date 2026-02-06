@@ -18,10 +18,10 @@ playwright-cli screenshot                     # Verify result
 ### Authenticated Session Reuse
 
 ```bash
-# Login once, save state
+# Login once, save state (--session only on `open`)
 playwright-cli --session=myapp open https://app.com/login
-# ... fill login form ...
-playwright-cli --session=myapp state-save auth-state.json
+# ... fill login form (no --session flag on these) ...
+playwright-cli state-save auth-state.json
 
 # Restore in future sessions
 playwright-cli state-load auth-state.json

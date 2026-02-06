@@ -4,6 +4,7 @@ Make yourself at home.
 # Skills
 These are your most important tools. Create them whenever you would like to record a workflow, particular task, or the user requests it.
 Reach for them frequently.
+Skills are LIVING documents, they should be updated whenever you learn something new about the task they represent, or whenever you find a better way to do it.
 
 ## Creating skills
 Skills follow the [Agent Skills](https://agentskills.io/specification).

@@ -31,8 +31,16 @@ playwright-cli type <text>            # Type into focused element
 playwright-cli screenshot [ref]       # Capture page or element screenshot
 playwright-cli select <ref> <value>   # Select dropdown option
 playwright-cli press <key>            # Press keyboard key
-playwright-cli eval <js> [ref]        # Run JS on page or element
+playwright-cli eval <js> [ref]        # Run JS on page or element (expression only, no IIFEs)
 ```
+
+## eval Gotchas
+
+The `eval` command wraps your code in `() => (YOUR_CODE)`, so:
+- **Expressions work:** `"document.title"`, `"JSON.stringify(someObj)"`
+- **Chained promises work:** `"fetch('/api').then(function(r) { return r.json(); }).then(function(d) { return JSON.stringify(d); })"`
+- **IIFEs fail:** `"(() => { ... })()"` — already wrapped in a function
+- **Statements fail:** `"const x = 1; return x"` — not valid as an expression
 
 ## Screenshots for UI Debugging
 
@@ -40,12 +48,22 @@ Use `playwright-cli screenshot` after interactions to visually verify the page s
 
 ## Sessions
 
+**Use the default session** — just omit `--session` entirely. The `--session=name` flag is only for the initial `open` command that creates the session. Subsequent commands (`fill`, `click`, `snapshot`, etc.) automatically target the running session without any flag.
+
 ```bash
-playwright-cli --session=myapp open https://app.com   # Named session
-playwright-cli --session=myapp snapshot                # Reuse session
-playwright-cli session-list                            # List active sessions
-playwright-cli session-stop myapp                      # Stop session
+# Recommended: use the default session
+playwright-cli open https://app.com       # Creates default session
+playwright-cli snapshot                    # Targets the running session
+playwright-cli fill e3 "text"             # No --session flag needed
+playwright-cli click e5
+
+# Session management
+playwright-cli session-list               # List active sessions
+playwright-cli session-stop               # Stop default session
+playwright-cli session-stop myapp         # Stop named session
 ```
+
+**Gotcha:** Do NOT pass `--session=name` on follow-up commands — it errors with "The session is already configured." Only use it on the initial `open` if you need a named session.
 
 Sessions persist browser state (cookies, storage, login) across commands.
 
