@@ -3,6 +3,9 @@
 ;;; gptel — LLM client (GPT, Claude, Gemini, local models)
 (use-package gptel
   :demand t
+  :custom
+  (gptel-default-mode 'org-mode)        ;; dedicated gptel buffers use org-mode
+  (gptel-org-branching-context t)       ;; org outline tree defines context branches
   :config
   (require 'gptel-anthropic)
   (gptel-make-anthropic "Claude"
@@ -10,7 +13,11 @@
     :key (lambda () (or (getenv "ANTHROPIC_API_KEY")
                         (error "ANTHROPIC_API_KEY not set"))))
   (setq gptel-backend (gptel-get-backend "Claude")
-        gptel-model 'claude-sonnet-4-6))
+        gptel-model 'claude-sonnet-4-6)
+  ;; Branching context uses the heading hierarchy as context, so prompt/response
+  ;; delimiters must NOT be headings — otherwise every turn nests a new branch.
+  (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "@user\n")
+  (setf (alist-get 'org-mode gptel-response-prefix-alist) "@assistant\n"))
 
 ;;; claude-code-ide — Claude Code IDE integration
 (use-package claude-code-ide
