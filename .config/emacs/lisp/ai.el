@@ -19,10 +19,16 @@
   (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "@user\n")
   (setf (alist-get 'org-mode gptel-response-prefix-alist) "@assistant\n"))
 
+;;; eat — pure-elisp terminal, used as claude-code-ide's terminal backend
+;; (no native compilation needed, unlike vterm)
+(use-package eat)
+
 ;;; claude-code-ide — Claude Code IDE integration
 (use-package claude-code-ide
   :straight (:host github :repo "manzaltu/claude-code-ide.el")
-  :commands (claude-code-ide))
+  :commands (claude-code-ide)
+  :custom
+  (claude-code-ide-terminal-backend 'eat))
 
 ;;; AI keybindings under SPC a
 (with-eval-after-load 'general
